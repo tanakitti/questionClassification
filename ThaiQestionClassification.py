@@ -1,11 +1,12 @@
 import requests
+import sys
 from bs4 import BeautifulSoup
 from collections import defaultdict
 import pythainlp
 import time
 import codecs
 post = 0;
-Room = "food"
+Room = sys.argv[1]
 QUEUE = []
 BASEURL = "https://pantip.com/"
 URL = "https://pantip.com/forum/"+Room
