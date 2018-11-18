@@ -37,7 +37,7 @@ def parse_list_page(url):
         qestion = title.find("span", {"class": "icon-mini-posttype-que"})
         if(qestion is not None):
             post += 1
-            print("processing "+post)
+            print("processing ",post)
             findalTitle = title.find("div",{"class":"post-item-title"})
             tags =  title.find_all("div",{"class":"tag-item "})
             # print(findalTitle.text.strip())
