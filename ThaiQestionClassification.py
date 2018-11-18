@@ -76,7 +76,7 @@ def main():
 
 def write(texts):
     global Room
-    f = codecs.open(Room+"txt", "a", "utf-8")
+    f = codecs.open(Room+".txt", "a", "utf-8")
     for i in range(len(texts)):
 
         f.write(texts[i][0]+"\t"+texts[i][1])
