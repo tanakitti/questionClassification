@@ -9,7 +9,7 @@ import csv
 
 pos = 0
 neg = 0
-# Room = sys.argv[1]
+Room = sys.argv[1]
 # category
 question_count = 0
 chat_count = 0
@@ -18,7 +18,7 @@ poll_count = 0
 news_count = 0
 sell_count = 0
 
-Room = "food"
+# Room = "food"
 BASEURL = "https://pantip.com/"
 STARTURL = "https://pantip.com/forum/"+Room
 processQueue = []
