@@ -6,10 +6,10 @@ import pythainlp
 import time
 import codecs
 import csv
-Room = 'art'
+# Room = 'art'
 pos = 0
 neg = 0
-#Room = sys.argv[1]
+Room = sys.argv[1]
 # category
 question_count = 0
 chat_count = 0
