@@ -8,7 +8,16 @@ import codecs
 
 pos = 0
 neg = 0
-Room = "food"
+Room = sys.argv[1]
+# category
+question_count = 0
+chat_count = 0
+review_count = 0
+poll_count = 0
+news_count = 0
+sell_count = 0
+
+# Room = "food"
 BASEURL = "https://pantip.com/"
 STARTURL = "https://pantip.com/forum/"+Room
 processQueue = []
@@ -31,13 +40,60 @@ def parse_list_page(url):
     for title in titles2:
         global pos
         global neg
-
-        #  check question post
+        tag = ""
+        global question_count
+        global chat_count
+        global review_count
+        global poll_count
+        global news_count
+        global sell_count
+        # check question post
         qestion = title.find("span", {"class": "icon-mini-posttype-que"})
-        if (qestion is not None):
-            extractFeature(title,"pos")
-        else:
-            extractFeature(title, "neg")
+        if qestion is not None and question_count<=2500:
+            tag = "question"
+            question_count = question_count +1
+            extractFeature(title, tag)
+            # extractFeature(title,"pos")
+        # else:
+        #     extractFeature(title, "neg")
+
+        # check chat post
+        chat = title.find("span", {"class": "icon-mini-posttype-chat"})
+        if chat is not None and chat_count<=2500:
+            tag="chat"
+            chat_count = chat_count +1
+            extractFeature(title, tag)
+        #     extractFeature(title, "pos")
+        # # else:
+        #     # extractFeature(title, "neg")
+        #
+        review = title.find("span", {"class": "icon-mini-posttype-review"})
+        if review is not None and review_count<=2500:
+            tag="review"
+            review_count = review_count +1
+            extractFeature(title, tag)
+        #     extractFeature(title, "pos")
+        #
+        poll = title.find("span", {"class": "icon-mini-posttype-poll"})
+        if poll is not None and poll_count<=2500:
+            tag = "news"
+            poll_count = poll_count +1
+            extractFeature(title, tag)
+
+        news = title.find("span", {"class": "icon-mini-posttype-news"})
+        if news is not None and news_count<=2500:
+            tag="news"
+            news_count = news_count +1
+            extractFeature(title, tag)
+        #     extractFeature(title, "pos")
+        #
+        sell = title.find("span", {"class": "icon-mini-posttype-sell"})
+        if sell is not None and sell_count<=2500:
+            tag="sell"
+            sell_count = sell_count +1
+            extractFeature(title, tag)
+        #
+
 
 
 
@@ -45,8 +101,8 @@ def parse_list_page(url):
 def extractFeature(text,postType):
     global pos
     global neg
-    if('neg'==postType): neg+=1
-    if('pos'==postType): pos+=1
+    # if('neg'==postType): neg+=1
+    # if('pos'==postType): pos+=1
     findalTitle = text.find("div", {"class": "post-item-title"})
     link = text.find_all("a", href=True)
     tags = text.find_all("div", {"class": "tag-item "})
@@ -59,9 +115,10 @@ def extractFeature(text,postType):
 
 def write(row,postType):
     global Room
-    f = codecs.open(postType+Room+".txt", "a", "utf-8")
+    # f = codecs.open(postType+Room+".txt", "a", "utf-8")
+    f = codecs.open(Room + "_alltags.txt", "a", "utf-8")
     print(row)
-    f.write(row[0]+"\t"+row[1]+"\t"+row[2]+"\t"+row[3])
+    f.write(row[0]+", "+row[1]+", "+row[2]+", "+row[3])
     f.write("\n")
     f.close()
 
@@ -79,8 +136,14 @@ def main():
         time.sleep(1)
         call_back, url = processQueue.pop(0)
         call_back(url)
-        print("pos: ",pos)
-        print("neg: ",neg)
+        # print("pos: ",pos)
+        # print("neg: ",neg)
+        print("ques : ", question_count)
+        print("chat : ", chat_count)
+        print("review: ", review_count)
+        print("poll : ", poll_count)
+        print("news : ", news_count)
+        print("sell : ", sell_count)
 
 
 
