@@ -6,10 +6,10 @@ import pythainlp
 import time
 import codecs
 import csv
-
+Room = 'art'
 pos = 0
 neg = 0
-Room = sys.argv[1]
+#Room = sys.argv[1]
 # category
 question_count = 0
 chat_count = 0
@@ -50,7 +50,7 @@ def parse_list_page(url):
         global sell_count
         # check question post
         qestion = title.find("span", {"class": "icon-mini-posttype-que"})
-        if qestion is not None and question_count<=2500:
+        if qestion is not None :
             tag = "question"
             question_count = question_count +1
             extractFeature(title, tag)
@@ -60,7 +60,7 @@ def parse_list_page(url):
 
         # check chat post
         chat = title.find("span", {"class": "icon-mini-posttype-chat"})
-        if chat is not None and chat_count<=2500:
+        if chat is not None :
             tag="chat"
             chat_count = chat_count +1
             extractFeature(title, tag)
@@ -69,20 +69,20 @@ def parse_list_page(url):
         #     # extractFeature(title, "neg")
         #
         review = title.find("span", {"class": "icon-mini-posttype-review"})
-        if review is not None and review_count<=2500:
+        if review is not None :
             tag="review"
             review_count = review_count +1
             extractFeature(title, tag)
         #     extractFeature(title, "pos")
         #
         poll = title.find("span", {"class": "icon-mini-posttype-poll"})
-        if poll is not None and poll_count<=2500:
+        if poll is not None :
             tag = "news"
             poll_count = poll_count +1
             extractFeature(title, tag)
 
         news = title.find("span", {"class": "icon-mini-posttype-news"})
-        if news is not None and news_count<=2500:
+        if news is not None :
             tag="news"
             news_count = news_count +1
             extractFeature(title, tag)
@@ -125,7 +125,7 @@ def write(row,postType):
     # f.write("\n")
     # f.close()
 
-    with open(Room + "_alltags.csv", mode = "a" , encoding='utf-8') as csv_file:
+    with open(Room + "_alltags_v2.csv", mode = "a" , encoding='utf-8') as csv_file:
         # fieldnames = ['id', 'datetime', 'category','tags','title']
         # f = csv.DictWriter(csv_file, fieldnames=fieldnames)
         f = csv.writer(csv_file)
@@ -157,6 +157,7 @@ def main():
         print("poll : ", poll_count)
         print("news : ", news_count)
         print("sell : ", sell_count)
+        print(chat_count + review_count + poll_count + news_count + sell_count)
 
 
 
